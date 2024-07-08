@@ -1,7 +1,10 @@
 export default function NavMenu() {
   return (
     <nav>
-      <p>test</p>
+      <ul>
+        <li>Home</li>
+        <li>Profile</li>
+      </ul>
     </nav>
   );
 }
