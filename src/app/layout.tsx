@@ -23,7 +23,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-row">
+          <div className="grid-cols-2">
             <NavMenu />
             {children}
           </div>
