@@ -1,7 +1,5 @@
-import "~/styles/globals.css";
 import NavMenu from "~/components/NavMenu";
 
-import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
 
@@ -15,7 +13,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en">
       <body className="container">
         <ThemeProvider
           attribute="class"
