@@ -1,23 +1,24 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+
 export default function PostCard() {
   return (
-    <Card className="w-40  rounded">
+    <Card className="rounded shadow-md">
       <CardHeader>
-        <CardTitle>Post Title</CardTitle>
-        <CardDescription>Post Description</CardDescription>
+        <CardTitle>What&apos;s on your mind?</CardTitle>
       </CardHeader>
       <CardContent>
-        <p>Post Content</p>
+        <textarea className="rounded border p-2" />
       </CardContent>
       <CardFooter>
         <p>Card Footer</p>
+        <Button>Post</Button>
       </CardFooter>
     </Card>
   );
