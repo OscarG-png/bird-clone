@@ -1,5 +1,4 @@
 import NavMenu from "~/components/NavMenu";
-
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
 
@@ -21,7 +20,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="grid-cols-2">
+          <div className="grid grid-cols-2">
             <NavMenu />
             {children}
           </div>
