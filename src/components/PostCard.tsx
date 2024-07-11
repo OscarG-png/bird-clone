@@ -20,7 +20,9 @@ export default function PostCard() {
         </CardContent>
         <CardFooter>
           <p>Card Footer</p>
-          <Button type="submit">Post</Button>
+          <Button type="submit" className="rounded border bg-blue-400">
+            Post
+          </Button>
         </CardFooter>
       </form>
     </Card>
