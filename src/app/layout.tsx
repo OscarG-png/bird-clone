@@ -2,13 +2,7 @@ import NavMenu from "~/components/NavMenu";
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
 import "~/styles/globals.css";
-import {
-  ClerkProvider,
-  SignedOut,
-  SignedIn,
-  UserButton,
-  SignInButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Birdclone",
