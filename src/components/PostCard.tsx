@@ -19,10 +19,12 @@ export default function PostCard() {
           <textarea className="rounded border p-2" required />
         </CardContent>
         <CardFooter>
-          <p>Card Footer</p>
-          <Button type="submit" className="rounded border bg-blue-400">
-            Post
-          </Button>
+          <div className="flex justify-between gap-2">
+            <p>Card Footer</p>
+            <Button type="submit" className="rounded border bg-blue-400">
+              Post
+            </Button>
+          </div>
         </CardFooter>
       </form>
     </Card>
