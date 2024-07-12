@@ -14,22 +14,22 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className="container">
-          <div className="grid-cols-2">
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+    <html lang="en">
+      <body className="container">
+        <div className="grid-cols-2">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ClerkProvider>
               <NavMenu />
               {children}
-            </ThemeProvider>
-          </div>
-        </body>
-      </html>
-    </ClerkProvider>
+            </ClerkProvider>
+          </ThemeProvider>
+        </div>
+      </body>
+    </html>
   );
 }

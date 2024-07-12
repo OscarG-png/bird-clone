@@ -7,8 +7,11 @@ import {
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import SubmitPost from "~/server/actions/actions";
+import { auth } from "@clerk/nextjs/server";
 
 export default function PostCard() {
+  const user = auth();
+
   return (
     <Card className="rounded shadow-md">
       <form action={SubmitPost}>
