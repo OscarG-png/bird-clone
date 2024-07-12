@@ -2,6 +2,13 @@ import NavMenu from "~/components/NavMenu";
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
 import "~/styles/globals.css";
+import {
+  ClerkProvider,
+  SignedOut,
+  SignedIn,
+  UserButton,
+  SignInButton,
+} from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Birdclone",
@@ -13,20 +20,22 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className="container">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+    <ClerkProvider>
+      <html lang="en">
+        <body className="container">
           <div className="grid-cols-2">
-            <NavMenu />
-            {children}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NavMenu />
+              {children}
+            </ThemeProvider>
           </div>
-        </ThemeProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

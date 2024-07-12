@@ -1,4 +1,5 @@
 import { ModeToggle } from "./Theme-Toggle";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function NavMenu() {
   return (
@@ -7,7 +8,13 @@ export default function NavMenu() {
         <li>Home</li>
         <li>Profile</li>
       </ul>
-      <div className="relative">
+      <div className="relative flex gap-2">
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
         <ModeToggle />
       </div>
     </nav>
