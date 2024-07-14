@@ -10,11 +10,16 @@ import SubmitPost from "~/server/actions/actions";
 import { auth } from "@clerk/nextjs/server";
 
 export default function PostCard() {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    console.log("FormData: ", formData);
+  }
   const user = auth();
 
   return (
     <Card className="rounded shadow-md">
-      <form action={SubmitPost}>
+      <form onSubmit={handleSubmit}>
         <CardHeader>
           <CardTitle>What&apos;s on your mind?</CardTitle>
         </CardHeader>
