@@ -12,6 +12,11 @@ export default function PostCard() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    // I need to get the user data form clerk later.
+    const postData = {
+      ...Object.fromEntries(formData.entries()),
+      user: "user-id",
+    };
     console.log("FormData: ", formData);
   }
 
