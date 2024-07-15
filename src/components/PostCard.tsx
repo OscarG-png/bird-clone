@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -6,8 +7,6 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
-import SubmitPost from "~/server/actions/actions";
-import { auth } from "@clerk/nextjs/server";
 
 export default function PostCard() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -15,7 +14,6 @@ export default function PostCard() {
     const formData = new FormData(e.currentTarget);
     console.log("FormData: ", formData);
   }
-  const user = auth();
 
   return (
     <Card className="rounded shadow-md">
