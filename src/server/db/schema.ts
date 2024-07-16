@@ -1,7 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
+import { sql, type InferSelectModel } from "drizzle-orm";
 import {
   index,
   pgTableCreator,
@@ -32,3 +32,4 @@ export const posts = createTable(
     nameIndex: index("user_idx").on(example.user),
   }),
 );
+export type Post = InferSelectModel<typeof posts>;
