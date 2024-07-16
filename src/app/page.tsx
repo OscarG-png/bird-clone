@@ -13,13 +13,14 @@ export default function HomePage() {
 async function Posts() {
   const posts = await getPosts();
   return (
-    <ul>
+    <>
       {posts.map((post) => (
-        <li key={post.id}>
-          <h2>{post.user}</h2>
+        <div key={post.id} className="flex flex-col items-center">
+          <h1>{post.user}</h1>
           <p>{post.content}</p>
-        </li>
+          <p>{post.createdAt.toDateString()}</p>
+        </div>
       ))}
-    </ul>
+    </>
   );
 }
