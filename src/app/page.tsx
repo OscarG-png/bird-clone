@@ -1,5 +1,6 @@
 import PostCard from "~/components/PostCard";
 import { getPosts } from "~/server/actions/actions";
+import { Separator } from "~/components/ui/separator";
 
 export default function HomePage() {
   return (
@@ -15,11 +16,14 @@ async function Posts() {
   return (
     <>
       {posts.map((post) => (
-        <div key={post.id} className="flex flex-col items-center">
-          <h1>{post.user}</h1>
-          <p>{post.content}</p>
-          <p>{post.createdAt.toDateString()}</p>
-        </div>
+        <>
+          <div key={post.id} className="flex flex-col items-center">
+            <h1>{post.user}</h1>
+            <p>{post.content}</p>
+            <p>{post.createdAt.toDateString()}</p>
+          </div>
+          <Separator className="" />
+        </>
       ))}
     </>
   );
