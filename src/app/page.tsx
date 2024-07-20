@@ -4,7 +4,7 @@ import { Separator } from "~/components/ui/separator";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <main className="flex min-h-screen flex-col items-center gap-2">
       <PostCard />
       <Posts />
     </main>
@@ -17,7 +17,10 @@ async function Posts() {
     <>
       {posts.map((post) => (
         <>
-          <div key={post.id} className="flex flex-col items-center">
+          <div
+            key={post.id}
+            className="flex w-72 flex-col items-center rounded border"
+          >
             <h1>{post.user}</h1>
             <p>{post.content}</p>
             <p>{post.createdAt.toDateString()}</p>
