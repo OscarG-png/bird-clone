@@ -16,19 +16,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="container">
-        <div className="grid-cols-2">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ClerkProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClerkProvider>
+            <div className="grid-cols-2">
               <NavMenu />
               {children}
-            </ClerkProvider>
-          </ThemeProvider>
-        </div>
+            </div>
+          </ClerkProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
