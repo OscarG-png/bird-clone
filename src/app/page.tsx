@@ -19,11 +19,13 @@ async function Posts() {
         <>
           <div
             key={post.id}
-            className="flex w-72 flex-col items-center rounded border"
+            className="flex w-72 flex-col items-center rounded border p-2"
           >
-            <h1>{post.user}</h1>
+            <div className="flex w-full justify-between">
+              <h1>{post.user}</h1>
+              <p className="text-sm italic">{post.createdAt.toDateString()}</p>
+            </div>
             <p>{post.content}</p>
-            <p>{post.createdAt.toDateString()}</p>
           </div>
           <Separator className="" />
         </>
