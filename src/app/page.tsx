@@ -24,7 +24,7 @@ async function Posts() {
     <>
       {posts.map((post) => (
         <div key={post.id}>
-          <div className="flex w-72 flex-col items-center rounded border p-2">
+          <div className="flex w-72 flex-col items-center rounded border p-2 shadow-md">
             <div className="flex w-full justify-between">
               <h1>{post.user}</h1>
               <p className="text-sm italic">{post.createdAt.toDateString()}</p>
