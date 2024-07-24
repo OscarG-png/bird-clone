@@ -9,7 +9,9 @@ export default function NavMenu() {
         <li>
           <Link href={"/"}>Home</Link>
         </li>
-        <li>Profile</li>
+        <li>
+          <Link href={"/profile"}>Profile</Link>
+        </li>
       </ul>
       <div className="flex justify-end gap-2">
         <SignedOut>
