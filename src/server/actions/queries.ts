@@ -5,9 +5,12 @@ import { currentUser } from "@clerk/nextjs/server";
 
 export async function SubmitPost(formData: FormData): Promise<void> {
   const user = await currentUser();
+  if (!user) {
+    throw new Error("User not found");
+  }
   const postData = {
     ...Object.fromEntries(formData.entries()),
-    user: user!.id,
+    user: user.id,
   };
   console.log("Post submitted!: ", postData);
 }

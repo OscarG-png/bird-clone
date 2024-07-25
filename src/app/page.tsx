@@ -1,5 +1,5 @@
 import PostCard from "~/components/PostCard";
-import { getPosts } from "~/server/actions/actions";
+import { getPosts } from "~/server/actions/queries";
 import { Separator } from "~/components/ui/separator";
 
 export default function HomePage() {

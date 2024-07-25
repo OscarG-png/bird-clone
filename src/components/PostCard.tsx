@@ -7,14 +7,22 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
-import { SubmitPost } from "~/server/actions/actions";
 
 export default function PostCard() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    await SubmitPost(formData);
+    const response = await fetch("/api/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) {
+      console.error("Failed to submit post");
+    }
   }
   return (
     <Card className="rounded shadow-md">
