@@ -3,10 +3,13 @@ import { db } from "~/server/db";
 import { type Post } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 
-export async function SubmitPost(): Promise<string> {
-  const user = currentUser();
-  console.log("Post submitted!");
-  return "success";
+export async function SubmitPost(formData: FormData): Promise<void> {
+  const user = await currentUser();
+  const postData = {
+    ...Object.fromEntries(formData.entries()),
+    user: user!.id,
+  };
+  console.log("Post submitted!: ", postData);
 }
 export async function getPosts(): Promise<Post[]> {
   const posts = await db.query.posts.findMany({

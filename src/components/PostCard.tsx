@@ -7,19 +7,14 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+import { SubmitPost } from "~/server/actions/actions";
 
 export default function PostCard() {
-  async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    // I need to get the user data form clerk later.
-    const postData = {
-      ...Object.fromEntries(formData.entries()),
-      user: "test string",
-    };
+    await SubmitPost(formData);
   }
   return (
     <Card className="rounded shadow-md">
