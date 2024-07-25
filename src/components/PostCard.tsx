@@ -7,19 +7,24 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+// import { currentUser } from "@clerk/nextjs/server";
 
 export default function PostCard() {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     e.preventDefault();
+    // const currUser = await currentUser();
+    // console.log("curruser: ", currUser);
+
     const formData = new FormData(e.currentTarget);
     // I need to get the user data form clerk later.
     const postData = {
       ...Object.fromEntries(formData.entries()),
-      user: "user-id",
+      user: "test string",
     };
-    console.log("FormData: ", formData);
+    console.log("FormData: ", postData);
   }
-
   return (
     <Card className="rounded shadow-md">
       <form onSubmit={handleSubmit}>
