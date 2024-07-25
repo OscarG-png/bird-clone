@@ -28,7 +28,7 @@ export default function PostCard() {
           <CardTitle>What&apos;s on your mind?</CardTitle>
         </CardHeader>
         <CardContent>
-          <textarea className="rounded border p-2" required />
+          <textarea name="content" className="rounded border p-2" required />
         </CardContent>
         <CardFooter>
           <div className="flex justify-between gap-2">
