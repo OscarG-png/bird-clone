@@ -7,23 +7,30 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+import { useRef } from "react";
 
 export default function PostCard() {
+  const formRef = useRef<HTMLFormElement>(null);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const form = formRef.current;
+    if (!form) return;
+    const formData = new FormData(form);
     const response = await fetch("/api/posts", {
       method: "POST",
       body: formData,
     });
-    if (!response.ok) {
+    if (response.ok) {
+      console.log("Post submitted!");
+      form.reset();
+    } else {
       console.error("Failed to submit post");
     }
   }
   return (
     <Card className="rounded shadow-md">
-      <form onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <CardHeader>
           <CardTitle>What&apos;s on your mind?</CardTitle>
         </CardHeader>
