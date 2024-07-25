@@ -1,8 +1,10 @@
 import "server-only";
 import { db } from "~/server/db";
 import { type Post } from "~/server/db/schema";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function SubmitPost(): Promise<string> {
+  const user = currentUser();
   console.log("Post submitted!");
   return "success";
 }
