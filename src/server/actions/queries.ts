@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "~/server/db";
-import { type Post } from "~/server/db/schema";
+import { posts, type Post } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 
 export async function SubmitPost(
@@ -10,13 +10,15 @@ export async function SubmitPost(
   if (!user) {
     throw new Error("User not found");
   }
-  const postData = {
-    ...Object.fromEntries(formData.entries()),
+  const postData: Post = {
     user: user.id,
+    content: "",
   };
-  console.log("Post submitted!: ", postData);
+  console.log("Post submitted!: ", newPost);
+  console.log("user data: ", user);
   //logic to insert post into database here.
   //need to troubleshoot why i'm not seeing the rest of the formdata
+  const newPost = await db.insert(posts).values(postData);
   return { message: "Post submitted!" };
 }
 export async function getPosts(): Promise<Post[]> {

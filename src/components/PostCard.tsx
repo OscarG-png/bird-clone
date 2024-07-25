@@ -22,7 +22,6 @@ export default function PostCard() {
       body: formData,
     });
     if (response.ok) {
-      console.log("Post submitted!");
       form.reset();
     } else {
       console.error("Failed to submit post");
