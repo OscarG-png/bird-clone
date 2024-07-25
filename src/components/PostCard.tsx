@@ -15,10 +15,7 @@ export default function PostCard() {
     const formData = new FormData(e.currentTarget);
     const response = await fetch("/api/posts", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+      body: formData,
     });
     if (!response.ok) {
       console.error("Failed to submit post");
