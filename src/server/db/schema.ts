@@ -8,6 +8,7 @@ import {
   serial,
   timestamp,
   varchar,
+  integer,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -22,7 +23,7 @@ export const posts = createTable(
   "post",
   {
     id: serial("id").primaryKey(),
-    user: varchar("name", { length: 100 }).notNull(),
+    user: varchar("name", { length: 100 }).notNull().unique(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -39,6 +40,9 @@ export const likes = createTable(
   {
     id: serial("id").primaryKey(),
     user: varchar("user", { length: 100 }).notNull(),
+    postId: integer("post_id")
+      .references(() => posts.id, { onDelete: "cascade" })
+      .notNull(),
   },
   (example) => ({
     nameIndex: index("user_idx").on(example.user),

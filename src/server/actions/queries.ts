@@ -7,7 +7,7 @@ export async function SubmitPost(
   formData: FormData,
 ): Promise<{ message: string }> {
   const user = await currentUser();
-  console.log("user data: ", user);
+  // console.log("user data: ", user);
   if (!user) {
     throw new Error("User not found");
   }
