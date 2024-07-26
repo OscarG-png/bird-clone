@@ -7,18 +7,20 @@ export async function SubmitPost(
   formData: FormData,
 ): Promise<{ message: string }> {
   const user = await currentUser();
+  console.log("user data: ", user);
   if (!user) {
     throw new Error("User not found");
   }
-  const postData: Post = {
+  const formContent = formData.get("content");
+  if (typeof formContent !== "string") {
+    throw new Error("Content not found");
+  }
+  const postData = {
     user: user.id,
-    content: "",
+    content: formContent,
   };
-  console.log("Post submitted!: ", newPost);
-  console.log("user data: ", user);
-  //logic to insert post into database here.
-  //need to troubleshoot why i'm not seeing the rest of the formdata
   const newPost = await db.insert(posts).values(postData);
+  console.log("Post submitted!: ", newPost);
   return { message: "Post submitted!" };
 }
 export async function getPosts(): Promise<Post[]> {
