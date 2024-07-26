@@ -33,3 +33,15 @@ export const posts = createTable(
   }),
 );
 export type Post = InferSelectModel<typeof posts>;
+
+export const likes = createTable(
+  "like",
+  {
+    id: serial("id").primaryKey(),
+    user: varchar("user", { length: 100 }).notNull(),
+  },
+  (example) => ({
+    nameIndex: index("user_idx").on(example.user),
+  }),
+);
+export type Like = InferSelectModel<typeof likes>;
