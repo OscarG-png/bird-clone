@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "~/server/db";
 import { posts, type Post } from "~/server/db/schema";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser, clerkClient } from "@clerk/nextjs/server";
 
 export async function SubmitPost(
   formData: FormData,
@@ -27,6 +27,10 @@ export async function getPosts(): Promise<Post[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
   });
+  for (const post of posts) {
+    const userName = await clerkClient.users.getUser(post.user);
+    post.user = userName.username!;
+  }
 
   return posts;
 }
