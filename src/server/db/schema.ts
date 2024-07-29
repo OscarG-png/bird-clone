@@ -49,3 +49,19 @@ export const likes = createTable(
   }),
 );
 export type Like = InferSelectModel<typeof likes>;
+
+export const comments = createTable(
+  "comment",
+  {
+    id: serial("id").primaryKey(),
+    user: varchar("user", { length: 100 }).notNull(),
+    postId: integer("post_id")
+      .references(() => posts.id, { onDelete: "cascade" })
+      .notNull(),
+    content: varchar("content", { length: 256 }).notNull(),
+  },
+  (example) => ({
+    nameIndex: index("user_idx").on(example.user),
+  }),
+);
+export type Comment = InferSelectModel<typeof comments>;

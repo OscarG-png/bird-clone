@@ -27,6 +27,8 @@ export async function getPosts(): Promise<Post[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
   });
+  // I should make my own backend. I don't know what'll happen if this gets too big.
+  // lots of calls to the clerk api maybe be bad.
   for (const post of posts) {
     const userName = await clerkClient.users.getUser(post.user);
     post.user = userName.username!;
