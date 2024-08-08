@@ -24,13 +24,14 @@ export const posts = createTable(
   {
     id: serial("id").primaryKey(),
     user: varchar("name", { length: 100 }).notNull().unique(),
+    userImage: varchar("user_image", { length: 200 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     content: varchar("content", { length: 256 }).notNull(),
   },
   (example) => ({
-    nameIndex: index("user_idx").on(example.user),
+    nameIndex: index("post_user_idx").on(example.user),
   }),
 );
 export type Post = InferSelectModel<typeof posts>;
@@ -45,7 +46,7 @@ export const likes = createTable(
       .notNull(),
   },
   (example) => ({
-    nameIndex: index("user_idx").on(example.user),
+    nameIndex: index("like_user_idx").on(example.user),
   }),
 );
 export type Like = InferSelectModel<typeof likes>;
@@ -61,7 +62,7 @@ export const comments = createTable(
     content: varchar("content", { length: 256 }).notNull(),
   },
   (example) => ({
-    nameIndex: index("user_idx").on(example.user),
+    nameIndex: index("comment_user_idx").on(example.user),
   }),
 );
 export type Comment = InferSelectModel<typeof comments>;
@@ -76,7 +77,7 @@ export const hashTags = createTable(
       .notNull(),
   },
   (example) => ({
-    nameIndex: index("tag_idx").on(example.tag),
+    nameIndex: index("tag_user_idx").on(example.tag),
   }),
 );
 export type HashTag = InferSelectModel<typeof hashTags>;
