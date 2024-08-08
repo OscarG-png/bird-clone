@@ -65,3 +65,18 @@ export const comments = createTable(
   }),
 );
 export type Comment = InferSelectModel<typeof comments>;
+
+export const hashTags = createTable(
+  "hash_tag",
+  {
+    id: serial("id").primaryKey(),
+    tag: varchar("tag", { length: 100 }).notNull().unique(),
+    postId: integer("post_id")
+      .references(() => posts.id, { onDelete: "no action" })
+      .notNull(),
+  },
+  (example) => ({
+    nameIndex: index("tag_idx").on(example.tag),
+  }),
+);
+export type HashTag = InferSelectModel<typeof hashTags>;
