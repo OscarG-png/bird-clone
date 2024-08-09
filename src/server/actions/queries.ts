@@ -51,3 +51,22 @@ export async function getUserPosts(userId: string) {
   });
   return posts;
 }
+export async function deletePost(id: number) {
+  const post = await db.query.posts.findFirst({
+    where: (model, { eq }) => eq(model.id, id),
+  });
+  if (!post) {
+    throw new Error("Post not found");
+  }
+  const user = await currentUser();
+  if (!user) {
+    throw new Error("User not found");
+  }
+  if (post.user !== user.username) {
+    throw new Error("You are not authorized to delete this post");
+  }
+  // await db.query.posts.delete({
+  //   where: (model, { eq }) => eq(model.id, id),
+  // });
+  return { message: "Post deleted" };
+}
