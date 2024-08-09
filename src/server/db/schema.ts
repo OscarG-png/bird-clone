@@ -1,7 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql, type InferSelectModel } from "drizzle-orm";
+import { relations, sql, type InferSelectModel } from "drizzle-orm";
 import {
   index,
   pgTableCreator,
@@ -35,6 +35,11 @@ export const posts = createTable(
   }),
 );
 export type Post = InferSelectModel<typeof posts>;
+
+export const postRelations = relations(posts, ({ many }) => ({
+  likes: many(likes),
+  comments: many(comments),
+}));
 
 export const likes = createTable(
   "like",
