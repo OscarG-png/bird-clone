@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "~/server/db";
-import { posts, type Post } from "~/server/db/schema";
+import { hashTags, posts, type Post } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 
 export async function SubmitPost(
@@ -14,19 +14,30 @@ export async function SubmitPost(
   if (user.banned) {
     throw new Error("User is banned");
   }
-  const formContent = formData.get("content");
-  if (typeof formContent !== "string") {
-    throw new Error("Content not found");
-  }
+  const formContent = formData.get("content") as string;
+  const formTags = formData.get("tags") as string;
+
   const postData = {
     user: user.username!,
     userImage: user.imageUrl,
     content: formContent,
   };
-  const newPost = await db.insert(posts).values(postData);
+
+  const newPost = await db.insert(posts).values(postData).returning();
+
+  if (formTags) {
+    const tags = formTags.split(",").map((tag) => tag.trim());
+    const tagData = tags.map((tag) => ({
+      tag,
+      postId: newPost[0]!.id,
+    }));
+    await db.insert(hashTags).values(tagData);
+  }
+
   console.log("Post submitted!: ", newPost);
   return { message: "Post submitted!" };
 }
+
 export async function getPosts(): Promise<Post[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
