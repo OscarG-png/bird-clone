@@ -46,12 +46,18 @@ export async function getPosts(): Promise<Post[]> {
     },
   });
 
-  return posts;
+  return posts.map((post) => ({
+    ...post,
+    tags: post.tags || [],
+  }));
 }
 
 export async function getPostById(id: number): Promise<Post> {
   const post = await db.query.posts.findFirst({
     where: (model, { eq }) => eq(model.id, id),
+    with: {
+      tags: true,
+    },
   });
   if (!post) {
     throw new Error("Post not found");

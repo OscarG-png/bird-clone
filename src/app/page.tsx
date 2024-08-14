@@ -16,7 +16,7 @@ export default function HomePage() {
 
 async function Posts() {
   const posts = await getPosts();
-
+  console.log("posts: ", posts[0]!.tags);
   return (
     <>
       {posts.map((post) => (
@@ -27,6 +27,13 @@ async function Posts() {
               <p className="text-sm italic">{post.createdAt.toDateString()}</p>
             </div>
             <p>{post.content}</p>
+            <div>
+              {post.tags.map((tag) => (
+                <span key={tag.id} className="text-sm italic">
+                  {tag.tag}
+                </span>
+              ))}
+            </div>
           </div>
           <Separator className="" />
         </div>

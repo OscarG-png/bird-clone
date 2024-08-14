@@ -34,7 +34,9 @@ export const posts = createTable(
     nameIndex: index("post_user_idx").on(example.user),
   }),
 );
-export type Post = InferSelectModel<typeof posts>;
+export type Post = InferSelectModel<typeof posts> & {
+  tags: HashTag[];
+};
 export const postsRelations = relations(posts, ({ many }) => ({
   tags: many(hashTags),
 }));
