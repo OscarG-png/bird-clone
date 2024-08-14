@@ -41,6 +41,9 @@ export async function SubmitPost(
 export async function getPosts(): Promise<Post[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
+    with: {
+      tags: true,
+    },
   });
 
   return posts;

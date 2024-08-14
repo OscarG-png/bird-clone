@@ -23,7 +23,7 @@ export const posts = createTable(
   "post",
   {
     id: serial("id").primaryKey(),
-    user: varchar("name", { length: 100 }).notNull(),
+    user: varchar("user", { length: 100 }).notNull(),
     userImage: varchar("user_image", { length: 200 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -35,12 +35,9 @@ export const posts = createTable(
   }),
 );
 export type Post = InferSelectModel<typeof posts>;
-
-// export const postRelations = relations(posts, ({ many }) => ({
-//   likes: many(likes),
-//   comments: many(comments),
-//   tags: many(hashTags),
-// }));
+export const postsRelations = relations(posts, ({ many }) => ({
+  tags: many(hashTags),
+}));
 
 export const likes = createTable(
   "like",
@@ -87,3 +84,9 @@ export const hashTags = createTable(
   }),
 );
 export type HashTag = InferSelectModel<typeof hashTags>;
+export const hashTagRelations = relations(hashTags, ({ one }) => ({
+  post: one(posts, {
+    fields: [hashTags.postId],
+    references: [posts.id],
+  }),
+}));
