@@ -35,15 +35,16 @@ export default function PostCard() {
         </CardHeader>
         <CardContent className="flex flex-col justify-center gap-5">
           <textarea name="content" className="rounded border p-2" required />
-          <div className="flex flex-col gap-1">
-            <label htmlFor="tags">Tags:</label>
+          <label htmlFor="tags" className="flex flex-col gap-1">
+            Tags:
             <input
+              id="tags"
               type="text"
               name="tags"
               placeholder="Seperate tags with Commas"
               className="rounded border p-2"
             />
-          </div>
+          </label>
         </CardContent>
         <CardFooter>
           <div className="flex justify-between gap-2">
