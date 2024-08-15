@@ -4,6 +4,7 @@ import { Separator } from "~/components/ui/separator";
 import Image from "next/image";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { Heart, MessageCircle } from "lucide-react";
 
 export default function HomePage() {
   // const user = auth();
@@ -54,6 +55,16 @@ async function Posts() {
                   {tag.tag}
                 </span>
               ))}
+            </div>
+            <div className="flex flex-row gap-5">
+              <div className="flex flex-row gap-1">
+                0
+                <Heart />
+              </div>
+              <div className="flex flex-row gap-1">
+                0
+                <MessageCircle />
+              </div>
             </div>
           </div>
           <Separator className="" />
