@@ -2,7 +2,8 @@ import PostCard from "~/components/PostCard";
 import { getPosts } from "~/server/actions/queries";
 import { Separator } from "~/components/ui/separator";
 import Image from "next/image";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 export default function HomePage() {
   // const user = auth();
@@ -15,6 +16,7 @@ export default function HomePage() {
       </SignedIn>
       <SignedOut>
         <h1>Please sign in to create posts</h1>
+        <SignInButton />
       </SignedOut>
       <Posts />
     </main>
@@ -38,7 +40,9 @@ async function Posts() {
                   height={50}
                   className="rounded-full"
                 />
-                <h1>{post.user}</h1>
+                <h1 className="hover:text-blue-500 hover:underline">
+                  <Link href={`/users/${post.user}`}>{post.user}</Link>
+                </h1>
               </div>
               <p className="text-sm italic">{post.createdAt.toDateString()}</p>
             </div>
