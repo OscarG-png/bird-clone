@@ -2,6 +2,7 @@ import PostCard from "~/components/PostCard";
 import { getPosts } from "~/server/actions/queries";
 import { Separator } from "~/components/ui/separator";
 import Image from "next/image";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function HomePage() {
   // const user = auth();
@@ -9,7 +10,12 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-2">
-      <PostCard />
+      <SignedIn>
+        <PostCard />
+      </SignedIn>
+      <SignedOut>
+        <h1>Please sign in to create posts</h1>
+      </SignedOut>
       <Posts />
     </main>
   );
