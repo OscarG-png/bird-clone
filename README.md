@@ -4,14 +4,14 @@ I've decided to try and make a clone of a social media platform.
 
 ## Tech Used
 
-- [Created using T3 Stack] (https://create.t3.gg/)
-- [Nextjs] (https://nextjs.org/)
-- [Postres] (https://www.postgresql.org/)
-- [Tailwind] (https://tailwindcss.com/)
-- [Drizzle ORM] (https://orm.drizzle.team/docs/overview)
-- [Clerk] (https://clerk.com/)
-- [Shadcn UI] (https://ui.shadcn.com/)
-- [Lucide React] (https://lucide.dev/)
+- [Created using T3 Stack](https://create.t3.gg/)
+- [Nextjs](https://nextjs.org/)
+- [Postres](https://www.postgresql.org/)
+- [Tailwind](https://tailwindcss.com/)
+- [Drizzle ORM](https://orm.drizzle.team/docs/overview)
+- [Clerk](https://clerk.com/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [Lucide React](https://lucide.dev/)
 
 ## Notes
 
