@@ -61,13 +61,15 @@ async function Posts() {
             </div>
             <div className="flex flex-row gap-5">
               <div className="flex flex-row gap-1">
-                0
+                <Link href={`/posts/${post.id}`}>0</Link>
                 <Heart />
               </div>
-              <div className="flex flex-row gap-1">
-                0
-                <MessageCircle />
-              </div>
+              <Link href={`/posts/${post.id}`}>
+                <div className="flex flex-row gap-1">
+                  0
+                  <MessageCircle />
+                </div>
+              </Link>
             </div>
           </div>
           <Separator className="dark:bg-slate-400" />
