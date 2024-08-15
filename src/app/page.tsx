@@ -51,8 +51,11 @@ async function Posts() {
             <div className="flex flex-row gap-2">
               <p>Tagged with: </p>
               {post.tags.map((tag) => (
-                <span key={tag.id} className="text-sm italic">
-                  {tag.tag}
+                <span
+                  key={tag.id}
+                  className="rounded bg-slate-500 p-1 text-sm italic hover:bg-blue-400 hover:underline"
+                >
+                  <Link href={`tags/${tag.id}`}>{tag.tag}</Link>
                 </span>
               ))}
             </div>
@@ -67,7 +70,7 @@ async function Posts() {
               </div>
             </div>
           </div>
-          <Separator className="" />
+          <Separator className="dark:bg-slate-400" />
         </div>
       ))}
     </>
