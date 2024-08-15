@@ -23,8 +23,8 @@ async function Posts() {
       {posts.map((post) => (
         <div key={post.id}>
           <div className="flex w-72 flex-col items-center rounded border p-2 shadow-md">
-            <div className="flex w-full justify-between">
-              <div className="flex flex-row">
+            <div className="flex w-full">
+              <div className="flex flex-row items-center gap-1">
                 <Image
                   src={`${post.userImage}`}
                   alt="user image"
@@ -38,6 +38,7 @@ async function Posts() {
             </div>
             <p>{post.content}</p>
             <div className="flex flex-row gap-2">
+              <p>Tagged with: </p>
               {post.tags.map((tag) => (
                 <span key={tag.id} className="text-sm italic">
                   {tag.tag}
