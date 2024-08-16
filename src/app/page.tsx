@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { Heart, MessageCircle } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import { deletePost } from "~/server/actions/queries";
 
 export default function HomePage() {
   // const user = auth();
@@ -53,7 +55,7 @@ async function Posts() {
               {post.tags.map((tag) => (
                 <span
                   key={tag.id}
-                  className="rounded bg-slate-500 p-1 text-sm italic hover:bg-blue-400 hover:underline"
+                  className="rounded bg-slate-200 p-1 text-sm italic hover:bg-blue-400 hover:underline dark:bg-slate-500"
                 >
                   <Link href={`tags/${tag.id}`}>{tag.tag}</Link>
                 </span>
@@ -71,6 +73,7 @@ async function Posts() {
                 </div>
               </Link>
             </div>
+            <Button className="rounded bg-red-600">delete</Button>
           </div>
           <Separator className="dark:bg-slate-400" />
         </div>

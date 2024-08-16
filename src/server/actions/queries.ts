@@ -2,6 +2,7 @@ import "server-only";
 import { db } from "~/server/db";
 import { hashTags, posts, type Post } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 
 export async function SubmitPost(
   formData: FormData,
@@ -72,9 +73,8 @@ export async function getUserPosts(userId: string) {
   return posts;
 }
 export async function deletePost(id: number) {
-  const post = await db.query.posts.findFirst({
-    where: (model, { eq }) => eq(model.id, id),
-  });
+  const post = await db.delete(posts).where(eq(posts.id, id)).returning();
+  console.log("Post deleted: ", post);
   if (!post) {
     throw new Error("Post not found");
   }
@@ -82,9 +82,9 @@ export async function deletePost(id: number) {
   if (!user) {
     throw new Error("User not found");
   }
-  if (post.user !== user.username) {
-    throw new Error("You are not authorized to delete this post");
-  }
+  // if (post.user !== user.username) {
+  //   throw new Error("You are not authorized to delete this post");
+  // }
   // await db.query.posts.delete({
   //   where: (model, { eq }) => eq(model.id, id),
   // });
