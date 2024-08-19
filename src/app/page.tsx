@@ -6,7 +6,6 @@ import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { Heart, MessageCircle } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { deletePost } from "~/server/actions/queries";
 
 export default function HomePage() {
   // const user = auth();
@@ -29,6 +28,7 @@ export default function HomePage() {
 async function Posts() {
   const posts = await getPosts();
   console.log("posts: ", posts[0]!.tags);
+
   return (
     <>
       {posts.map((post) => (

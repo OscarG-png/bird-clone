@@ -72,7 +72,7 @@ export async function getUserPosts(userId: string) {
   });
   return posts;
 }
-export async function deletePost(id: number) {
+export async function deletePost(id: number): Promise<{ message: string }> {
   const post = await db.delete(posts).where(eq(posts.id, id)).returning();
   console.log("Post deleted: ", post);
   if (!post) {
@@ -89,4 +89,15 @@ export async function deletePost(id: number) {
   //   where: (model, { eq }) => eq(model.id, id),
   // });
   return { message: "Post deleted" };
+}
+
+export async function getPostsByTag(tag: string): Promise<Post[]> {
+  const posts = await db.query.posts.findMany({
+    with: {
+      tags: {
+        where: (model, { eq }) => eq(model.tag, tag),
+      },
+    },
+  });
+  return posts;
 }
