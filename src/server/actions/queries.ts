@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "~/server/db";
-import { hashTags, posts, type Post } from "~/server/db/schema";
+import { hashTags, posts, type Post, type HashTag } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
@@ -91,13 +91,6 @@ export async function deletePost(id: number): Promise<{ message: string }> {
   return { message: "Post deleted" };
 }
 
-export async function getPostsByTag(tag: string): Promise<Post[]> {
-  const posts = await db.query.posts.findMany({
-    with: {
-      tags: {
-        where: (model, { eq }) => eq(model.tag, tag),
-      },
-    },
-  });
-  return posts;
+export default function getTags(): Promise<HashTag[]> {
+  return db.query.hashTags.findMany();
 }
