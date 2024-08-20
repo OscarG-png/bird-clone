@@ -21,6 +21,7 @@ I can tel that this projects wants a dedicated backend.
 
 # ToDo
 
+- changing post and hashtag relations. tomorrow I need to change how the submit post function handles posts and hashtag relations.
 - I want to change the date that appears on posts on the main page to show a time difference, ie: 4 hours ago. I think the detail page of the post can have the exact date.
 - Create a search by tag route so users can filter posts down to those.
 - user profile route so we can show all posts of that user.
