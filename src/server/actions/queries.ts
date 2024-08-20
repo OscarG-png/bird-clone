@@ -2,7 +2,7 @@ import "server-only";
 import { db } from "~/server/db";
 import { hashTags, posts, type Post, type HashTag } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export async function SubmitPost(
   formData: FormData,
@@ -90,7 +90,18 @@ export async function deletePost(id: number): Promise<{ message: string }> {
   // });
   return { message: "Post deleted" };
 }
-
-export default function getTags(): Promise<HashTag[]> {
-  return db.query.hashTags.findMany();
+export interface TagCount {
+  tag: string;
+  count: number;
+}
+export default async function getTags(): Promise<TagCount[]> {
+  // I need to use a group by query here
+  const tags = await db
+    .select({
+      tag: hashTags.tag,
+      count: sql`COUNT(${hashTags.tag})`.as<number>("count"),
+    })
+    .from(hashTags)
+    .groupBy(hashTags.tag);
+  return tags;
 }

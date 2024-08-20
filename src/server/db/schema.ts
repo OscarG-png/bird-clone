@@ -76,7 +76,7 @@ export const hashTags = createTable(
   "hash_tag",
   {
     id: serial("id").primaryKey(),
-    tag: varchar("tag", { length: 100 }).notNull().unique(),
+    tag: varchar("tag", { length: 100 }).notNull(),
     postId: integer("post_id")
       .references(() => posts.id, { onDelete: "no action" })
       .notNull(),

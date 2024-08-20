@@ -10,6 +10,9 @@ export default function NavMenu() {
           <Link href={"/"}>Home</Link>
         </li>
         <li>
+          <Link href={"/tags"}>Tags</Link>
+        </li>
+        <li>
           <Link href={"/profile"}>Profile</Link>
         </li>
       </ul>
