@@ -24,18 +24,27 @@ export async function SubmitPost(
     content: formContent,
   };
 
-  const newPost = await db.insert(posts).values(postData).returning();
+  const newPost = await db
+    .insert(posts)
+    .values(postData)
+    .returning({ insertedPost: posts.id });
 
   if (formTags) {
     const tags = formTags.split(",").map((tag) => tag.trim());
     const tagData = tags.map((tag) => ({
       tag,
-      postId: newPost[0]!.id,
+      postId: newPost[0]!.insertedPost,
     }));
-    const newTag = await db.insert(hashTags).values(tagData).returning();
+    const newTag = await db
+      .insert(hashTags)
+      .values(tagData)
+      .returning({ insertedTag: hashTags.id });
     await db
       .insert(postHashTags)
-      .values({ postId: newPost[0]!.id, tagId: newTag[0]!.id });
+      .values({
+        postId: newPost[0]!.insertedPost,
+        tagId: newTag[0]!.insertedTag,
+      });
   }
 
   console.log("Post submitted!: ", newPost);
