@@ -77,18 +77,19 @@ export const hashTags = createTable(
   {
     id: serial("id").primaryKey(),
     tag: varchar("tag", { length: 100 }).notNull(),
-    postId: integer("post_id")
-      .references(() => posts.id, { onDelete: "no action" })
-      .notNull(),
   },
   (example) => ({
     nameIndex: index("tag_user_idx").on(example.tag),
   }),
 );
 export type HashTag = InferSelectModel<typeof hashTags>;
-export const hashTagRelations = relations(hashTags, ({ one }) => ({
-  post: one(posts, {
-    fields: [hashTags.postId],
-    references: [posts.id],
-  }),
-}));
+
+export const postHashTags = createTable("post_hash_tag", {
+  id: serial("id").primaryKey(),
+  postId: integer("post_id")
+    .references(() => posts.id, { onDelete: "cascade" })
+    .notNull(),
+  tagId: integer("tag_id")
+    .references(() => hashTags.id, { onDelete: "cascade" })
+    .notNull(),
+});

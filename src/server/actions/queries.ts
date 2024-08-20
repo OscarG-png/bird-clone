@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "~/server/db";
-import { hashTags, posts, type Post, type HashTag } from "~/server/db/schema";
+import { hashTags, posts, type Post } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq, sql } from "drizzle-orm";
 

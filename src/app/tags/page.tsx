@@ -1,4 +1,4 @@
-import getTags, { TagCount } from "~/server/actions/queries";
+import getTags from "~/server/actions/queries";
 
 export default async function TagPage() {
   const tags = await getTags();
