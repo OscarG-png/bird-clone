@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "~/server/db";
-import { hashTags, posts, type Post } from "~/server/db/schema";
+import { hashTags, postHashTags, posts, type Post } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq, sql } from "drizzle-orm";
 
@@ -32,7 +32,10 @@ export async function SubmitPost(
       tag,
       postId: newPost[0]!.id,
     }));
-    await db.insert(hashTags).values(tagData);
+    const newTag = await db.insert(hashTags).values(tagData).returning();
+    await db
+      .insert(postHashTags)
+      .values({ postId: newPost[0]!.id, tagId: newTag[0]!.id });
   }
 
   console.log("Post submitted!: ", newPost);
