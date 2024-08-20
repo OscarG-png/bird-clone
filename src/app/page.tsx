@@ -27,7 +27,7 @@ export default function HomePage() {
 
 async function Posts() {
   const posts = await getPosts();
-  console.log("posts: ", posts[0]!.tags);
+  // console.log("posts: ", posts[0]!.tags);
 
   return (
     <>
@@ -52,14 +52,14 @@ async function Posts() {
             <p>{post.content}</p>
             <div className="flex flex-row gap-2">
               <p>Tagged with: </p>
-              {post.tags.map((tag) => (
+              {/* {post.tags.map((tag) => (
                 <span
                   key={tag.id}
                   className="rounded bg-slate-200 p-1 text-sm italic hover:bg-blue-400 hover:underline dark:bg-slate-500"
                 >
                   <Link href={`tags/${tag.id}`}>{tag.tag}</Link>
                 </span>
-              ))}
+              ))} */}
             </div>
             <div className="flex flex-row gap-5">
               <div className="flex flex-row gap-1">
