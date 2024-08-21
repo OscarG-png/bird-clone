@@ -2,6 +2,7 @@ import "server-only";
 import { db } from "~/server/db";
 import {
   hashTags,
+  likes,
   postHashTags,
   posts,
   type Post,
@@ -131,4 +132,23 @@ export default async function getTags(): Promise<TagCount[]> {
     .from(hashTags)
     .groupBy(hashTags.id);
   return tags;
+}
+
+export async function createLike(
+  formData: FormData,
+): Promise<{ message: string }> {
+  const user = await currentUser();
+  if (!user) {
+    throw new Error("User not found");
+  }
+  if (user.banned) {
+    throw new Error("User is banned");
+  }
+  const formContent = formData.get("content") as string;
+  const likeData = {
+    user: user.username!,
+    postId: 1,
+  };
+  await db.insert(likes).values(likeData);
+  return { message: "Like created" };
 }
