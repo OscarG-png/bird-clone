@@ -35,6 +35,9 @@ export const posts = createTable(
   }),
 );
 export type Post = InferSelectModel<typeof posts>;
+export const postRelations = relations(posts, ({ many }) => ({
+  postTags: many(postHashTags),
+}));
 
 export const likes = createTable(
   "like",

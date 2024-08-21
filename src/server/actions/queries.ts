@@ -52,16 +52,32 @@ export async function SubmitPost(
 export async function getPosts(): Promise<Post[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
+    with: {
+      postTags: {
+        with: {
+          tag: true,
+        },
+      },
+    },
   });
-
-  return posts;
+  return posts.map((post) => ({
+    ...post,
+    postTags: post.postTags.map((postTag) => ({
+      id: postTag.tagId,
+      tag: postTag.tag.tag,
+    })),
+  }));
 }
 
 export async function getPostById(id: number): Promise<Post> {
   const post = await db.query.posts.findFirst({
     where: (model, { eq }) => eq(model.id, id),
     with: {
-      tags: true,
+      postTags: {
+        with: {
+          tag: true,
+        },
+      },
     },
   });
   if (!post) {

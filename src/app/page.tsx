@@ -27,7 +27,7 @@ export default function HomePage() {
 
 async function Posts() {
   const posts = await getPosts();
-  // console.log("posts: ", posts[0]!.tags);
+  console.log("posts: ", posts[0]!);
 
   return (
     <>
