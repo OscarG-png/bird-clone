@@ -144,10 +144,10 @@ export async function createLike(
   if (user.banned) {
     throw new Error("User is banned");
   }
-  const formContent = formData.get("content") as string;
+  const formContent = formData.get("postId") as string;
   const likeData = {
     user: user.username!,
-    postId: 1,
+    postId: parseInt(formContent),
   };
   await db.insert(likes).values(likeData);
   return { message: "Like created" };
