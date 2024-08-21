@@ -1,6 +1,12 @@
 import "server-only";
 import { db } from "~/server/db";
-import { hashTags, postHashTags, posts, type Post } from "~/server/db/schema";
+import {
+  hashTags,
+  postHashTags,
+  posts,
+  type Post,
+  type PostWithTags,
+} from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq, sql } from "drizzle-orm";
 
@@ -49,7 +55,7 @@ export async function SubmitPost(
   return { message: "Post submitted!" };
 }
 
-export async function getPosts(): Promise<Post[]> {
+export async function getPosts(): Promise<PostWithTags[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
     with: {
