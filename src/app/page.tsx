@@ -4,7 +4,7 @@ import { Separator } from "~/components/ui/separator";
 import Image from "next/image";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import { Heart, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import LikesHeart from "~/components/LikesHeart";
 
