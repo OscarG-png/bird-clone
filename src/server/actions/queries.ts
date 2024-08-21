@@ -39,12 +39,10 @@ export async function SubmitPost(
       .insert(hashTags)
       .values(tagData)
       .returning({ insertedTag: hashTags.id });
-    await db
-      .insert(postHashTags)
-      .values({
-        postId: newPost[0]!.insertedPost,
-        tagId: newTag[0]!.insertedTag,
-      });
+    await db.insert(postHashTags).values({
+      postId: newPost[0]!.insertedPost,
+      tagId: newTag[0]!.insertedTag,
+    });
   }
 
   console.log("Post submitted!: ", newPost);
@@ -97,17 +95,18 @@ export async function deletePost(id: number): Promise<{ message: string }> {
   return { message: "Post deleted" };
 }
 export interface TagCount {
+  id: number;
   tag: string;
   count: number;
 }
 export default async function getTags(): Promise<TagCount[]> {
-  // I need to use a group by query here
   const tags = await db
     .select({
+      id: hashTags.id,
       tag: hashTags.tag,
       count: sql`COUNT(${hashTags.tag})`.as<number>("count"),
     })
     .from(hashTags)
-    .groupBy(hashTags.tag);
+    .groupBy(hashTags.id);
   return tags;
 }
