@@ -6,6 +6,7 @@ import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { Heart, MessageCircle } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import LikesHeart from "~/components/LikesHeart";
 
 export default function HomePage() {
   // const user = auth();
@@ -62,10 +63,7 @@ async function Posts() {
               ))}
             </div>
             <div className="flex flex-row gap-5">
-              <div className="flex flex-row gap-1">
-                <Link href={`/posts/${post.id}`}>0</Link>
-                <Heart />
-              </div>
+              <LikesHeart postId={post.id} liked={false} />
               <Link href={`/posts/${post.id}`}>
                 <div className="flex flex-row gap-1">
                   0
