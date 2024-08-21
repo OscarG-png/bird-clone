@@ -1,7 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql, type InferSelectModel } from "drizzle-orm";
+import { sql, relations, type InferSelectModel } from "drizzle-orm";
 import {
   index,
   pgTableCreator,
@@ -88,3 +88,13 @@ export const postHashTags = createTable("post_hash_tag", {
     .references(() => hashTags.id, { onDelete: "cascade" })
     .notNull(),
 });
+export const postHashTagRelations = relations(postHashTags, ({ one }) => ({
+  post: one(posts, {
+    fields: [postHashTags.postId],
+    references: [posts.id],
+  }),
+  tag: one(hashTags, {
+    fields: [postHashTags.tagId],
+    references: [hashTags.id],
+  }),
+}));
