@@ -1,12 +1,7 @@
 import PostCard from "~/components/PostCard";
 import { getPosts } from "~/server/actions/queries";
-import { Separator } from "~/components/ui/separator";
-import Image from "next/image";
-import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import { MessageCircle } from "lucide-react";
-import { Button } from "~/components/ui/button";
-import LikesHeart from "~/components/LikesHeart";
+import Post from "~/components/Post";
 
 export default function HomePage() {
   // const user = auth();
@@ -33,48 +28,7 @@ async function Posts() {
   return (
     <>
       {posts.map((post) => (
-        <div key={post.id}>
-          <div className="flex w-72 flex-col items-center rounded border p-2 shadow-md">
-            <div className="flex w-full">
-              <div className="flex flex-row items-center gap-1">
-                <Image
-                  src={`${post.userImage}`}
-                  alt="user image"
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
-                <h1 className="hover:text-blue-500 hover:underline">
-                  <Link href={`/users/${post.user}`}>{post.user}</Link>
-                </h1>
-              </div>
-              <p className="text-sm italic">{post.createdAt.toDateString()}</p>
-            </div>
-            <p>{post.content}</p>
-            <div className="flex flex-row gap-2">
-              <p>Tagged with: </p>
-              {post.postTags.map((tag) => (
-                <span
-                  key={tag.id}
-                  className="rounded bg-slate-200 p-1 text-sm italic hover:bg-blue-400 hover:underline dark:bg-slate-500"
-                >
-                  <Link href={`tags/${tag.id}`}>{tag.tag}</Link>
-                </span>
-              ))}
-            </div>
-            <div className="flex flex-row gap-5">
-              <LikesHeart postId={post.id} liked={false} />
-              <Link href={`/posts/${post.id}`}>
-                <div className="flex flex-row gap-1">
-                  0
-                  <MessageCircle />
-                </div>
-              </Link>
-            </div>
-            <Button className="rounded bg-red-600">delete</Button>
-          </div>
-          <Separator className="dark:bg-slate-400" />
-        </div>
+        <Post key={post.id} post={post} />
       ))}
     </>
   );
