@@ -38,20 +38,38 @@ export async function SubmitPost(
 
   if (formTags) {
     const tags = formTags.split(",").map((tag) => tag.trim());
-    const tagData = tags.map((tag) => ({
-      tag,
-      postId: newPost[0]!.insertedPost,
-    }));
-    const newTag = await db
-      .insert(hashTags)
-      .values(tagData)
-      .returning({ insertedTag: hashTags.id });
-    await db.insert(postHashTags).values({
-      postId: newPost[0]!.insertedPost,
-      tagId: newTag[0]!.insertedTag,
-    });
-  }
+    const tagIds: number[] = [];
 
+    for (const tag of tags) {
+      const existingTag = await db
+        .select({ id: hashTags.id })
+        .from(hashTags)
+        .where(eq(hashTags.tag, tag))
+        .limit(1)
+        .execute();
+
+      let tagId: number;
+
+      if (existingTag.length > 0) {
+        tagId = existingTag[0]!.id;
+      } else {
+        const newTag = await db
+          .insert(hashTags)
+          .values({ tag })
+          .returning({ id: hashTags.id });
+        tagId = newTag[0]!.id;
+      }
+      tagIds.push(tagId);
+    }
+    await Promise.all(
+      tagIds.map((tagId) =>
+        db.insert(postHashTags).values({
+          postId: newPost[0]!.insertedPost,
+          tagId,
+        }),
+      ),
+    );
+  }
   console.log("Post submitted!: ", newPost);
   return { message: "Post submitted!" };
 }
@@ -134,25 +152,32 @@ export default async function getTags(): Promise<TagCount[]> {
   return tags;
 }
 
-export async function getPostsByTag(id: number) {
-  const rawPosts = await db.query.posts.findMany({
-    with: {
-      postTags: {
-        with: {
-          tag: true,
-        },
-        where: (postTag, { eq }) => eq(postTag.tagId, id),
+export async function getPostsByTag(id: number): Promise<PostWithTags[]> {
+  const rawPosts = await db
+    .select({
+      post: posts,
+      postHashTags: postHashTags,
+      tag: hashTags.tag,
+    })
+    .from(posts)
+    .innerJoin(postHashTags, eq(posts.id, postHashTags.postId))
+    .innerJoin(hashTags, eq(postHashTags.tagId, hashTags.id))
+    .where(eq(postHashTags.tagId, id));
+
+  const formattedPosts = rawPosts.map((post) => ({
+    id: post.post.id,
+    user: post.post.user,
+    userImage: post.post.userImage,
+    createdAt: post.post.createdAt,
+    content: post.post.content,
+    postTags: [
+      {
+        id: post.postHashTags.tagId,
+        tag: post.tag,
       },
-    },
-  });
-  const posts = rawPosts.map((post) => ({
-    ...post,
-    postTags: post.postTags.map((tag) => ({
-      id: tag.id,
-      tag: tag.tag.tag,
-    })),
+    ],
   }));
-  return posts;
+  return formattedPosts;
 }
 
 export async function createLike(

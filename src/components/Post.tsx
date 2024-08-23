@@ -32,7 +32,7 @@ export default function Post({ post }: { post: PostWithTags }) {
               key={tag.id}
               className="rounded bg-slate-200 p-1 text-sm italic hover:bg-blue-400 hover:underline dark:bg-slate-500"
             >
-              <Link href={`tags/${tag.id}`}>{tag.tag}</Link>
+              <Link href={`/tags/${tag.id}`}>{tag.tag}</Link>
             </span>
           ))}
         </div>
