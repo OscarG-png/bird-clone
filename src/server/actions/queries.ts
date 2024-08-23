@@ -134,6 +134,20 @@ export default async function getTags(): Promise<TagCount[]> {
   return tags;
 }
 
+export async function getPostsByTag(id: number) {
+  const posts = await db.query.posts.findMany({
+    with: {
+      postTags: {
+        with: {
+          tag: true,
+        },
+        where: (postTag, { eq }) => eq(postTag.tagId, id),
+      },
+    },
+  });
+  return posts;
+}
+
 export async function createLike(
   formData: FormData,
 ): Promise<{ message: string }> {
