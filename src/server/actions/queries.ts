@@ -135,7 +135,7 @@ export default async function getTags(): Promise<TagCount[]> {
 }
 
 export async function getPostsByTag(id: number) {
-  const posts = await db.query.posts.findMany({
+  const rawPosts = await db.query.posts.findMany({
     with: {
       postTags: {
         with: {
@@ -145,6 +145,13 @@ export async function getPostsByTag(id: number) {
       },
     },
   });
+  const posts = rawPosts.map((post) => ({
+    ...post,
+    postTags: post.postTags.map((tag) => ({
+      id: tag.id,
+      tag: tag.tag.tag,
+    })),
+  }));
   return posts;
 }
 
