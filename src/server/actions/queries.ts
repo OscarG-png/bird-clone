@@ -198,3 +198,10 @@ export async function createLike(
   await db.insert(likes).values(likeData);
   return { message: "Like created" };
 }
+
+export async function getLikes(id: number) {
+  const likes = await db.query.likes.findMany({
+    where: (model, { eq }) => eq(model.postId, id),
+  });
+  return likes;
+}

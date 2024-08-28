@@ -47,13 +47,20 @@ export const likes = createTable(
     user: varchar("user", { length: 100 }).notNull(),
     postId: integer("post_id")
       .references(() => posts.id, { onDelete: "cascade" })
-      .notNull(),
+      .notNull()
+      .unique(),
   },
   (example) => ({
     nameIndex: index("like_user_idx").on(example.user),
   }),
 );
 export type Like = InferSelectModel<typeof likes>;
+export const likeRelations = relations(likes, ({ one }) => ({
+  post: one(posts, {
+    fields: [likes.postId],
+    references: [posts.id],
+  }),
+}));
 
 export const comments = createTable(
   "comment",
