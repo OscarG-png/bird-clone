@@ -103,6 +103,7 @@ export async function getPostById(id: number): Promise<Post> {
           tag: true,
         },
       },
+      likes: true,
     },
   });
   if (!post) {
@@ -110,6 +111,7 @@ export async function getPostById(id: number): Promise<Post> {
   }
   return post;
 }
+
 export async function getUserPosts(userId: string) {
   const posts = await db.query.posts.findMany({
     where: (model, { eq }) => eq(model.user, userId),
