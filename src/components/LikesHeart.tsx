@@ -1,6 +1,6 @@
 "use client";
 import { Heart } from "lucide-react";
-
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 export default function LikesHeart({
   postId,
   liked,
@@ -22,10 +22,21 @@ export default function LikesHeart({
     }
   }
   return (
-    <Heart
-      onClick={() => handleLike(postId)}
-      fill={liked ? "#dc2626" : "none"}
-      className="hover:cursor-pointer"
-    />
+    <>
+      <SignedIn>
+        <Heart
+          onClick={() => handleLike(postId)}
+          fill={liked ? "#dc2626" : "none"}
+          className="hover:cursor-pointer"
+        />
+      </SignedIn>
+      <SignedOut>
+        <Heart
+          onClick={() => alert("Please sign in to like")}
+          fill={liked ? "#dc2626" : "none"}
+          className="hover:cursor-pointer"
+        />
+      </SignedOut>
+    </>
   );
 }
