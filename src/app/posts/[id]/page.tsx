@@ -24,9 +24,14 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           <p>{post.content}</p>
         </div>
         <div id="footer" className="flex flex-row justify-between">
-          {post.likes.length}
-          <button>Like</button>
-          <button>Comment</button>
+          <div className="flex flex-row gap-1">
+            {post.likes.length}
+            <button>Like</button>
+          </div>
+          <div className="flex flex-row gap-1">
+            <p>0</p>
+            <button>Comment</button>
+          </div>
         </div>
       </div>
     </div>
