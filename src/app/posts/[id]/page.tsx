@@ -4,11 +4,11 @@ import Image from "next/image";
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const post = await getPostById(parseInt(id));
-  console.log(post);
+  console.log("from post detail page: ", post);
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <h1>PostPage</h1>
-      <div className="rounded-xl border-2 p-5">
+      <div className="rounded-xl border-2 p-5 shadow-md">
         <div id="user" className="flex flex-row items-center gap-6">
           <Image
             src={post.userImage}
@@ -23,7 +23,8 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         <div id="body">
           <p>{post.content}</p>
         </div>
-        <div id="footer">
+        <div id="footer" className="flex flex-row justify-between">
+          {post.likes.length}
           <button>Like</button>
           <button>Comment</button>
         </div>

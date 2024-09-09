@@ -6,7 +6,6 @@ import {
   postHashTags,
   posts,
   type PostWithTagsAndLikes,
-  type Post,
   type PostWithTags,
 } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
@@ -97,7 +96,7 @@ export async function getPosts(): Promise<PostWithTagsAndLikes[]> {
   }));
 }
 
-export async function getPostById(id: number): Promise<Post> {
+export async function getPostById(id: number): Promise<PostWithTagsAndLikes> {
   const post = await db.query.posts.findFirst({
     where: (model, { eq }) => eq(model.id, id),
     with: {
@@ -112,7 +111,14 @@ export async function getPostById(id: number): Promise<Post> {
   if (!post) {
     throw new Error("Post not found");
   }
-  return post;
+  return {
+    ...post,
+    postTags: post.postTags.map((postTag) => ({
+      id: postTag.tagId,
+      tag: postTag.tag.tag,
+    })),
+    likes: post.likes || [], // Ensure likes is an array of objects
+  };
 }
 
 export async function getUserPosts(userId: string) {
