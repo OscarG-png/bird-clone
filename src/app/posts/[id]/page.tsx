@@ -4,6 +4,7 @@ import Image from "next/image";
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const post = await getPostById(parseInt(id));
+  console.log(post);
   return (
     <div className="flex flex-col items-center justify-center">
       <h1>PostPage</h1>

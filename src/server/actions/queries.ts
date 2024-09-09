@@ -5,6 +5,7 @@ import {
   likes,
   postHashTags,
   posts,
+  type PostWithTagsAndLikes,
   type Post,
   type PostWithTags,
 } from "~/server/db/schema";
@@ -74,7 +75,7 @@ export async function SubmitPost(
   return { message: "Post submitted!" };
 }
 
-export async function getPosts(): Promise<PostWithTags[]> {
+export async function getPosts(): Promise<PostWithTagsAndLikes[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
     with: {
@@ -83,6 +84,7 @@ export async function getPosts(): Promise<PostWithTags[]> {
           tag: true,
         },
       },
+      likes: true,
     },
   });
   return posts.map((post) => ({
@@ -91,6 +93,7 @@ export async function getPosts(): Promise<PostWithTags[]> {
       id: postTag.tagId,
       tag: postTag.tag.tag,
     })),
+    likes: post.likes || [],
   }));
 }
 

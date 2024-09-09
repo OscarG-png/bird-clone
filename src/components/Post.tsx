@@ -3,9 +3,10 @@ import { Button } from "./ui/button";
 import LikesHeart from "./LikesHeart";
 import Link from "next/link";
 import Image from "next/image";
-import { type PostWithTags } from "~/server/db/schema";
+import type { PostWithTagsAndLikes } from "~/server/db/schema";
 
-export default function Post({ post }: { post: PostWithTags }) {
+export default function Post({ post }: { post: PostWithTagsAndLikes }) {
+  console.log("post: ", post);
   return (
     <div key={post.id}>
       <div className="flex w-72 flex-col items-center rounded border p-2 shadow-md">
@@ -37,7 +38,12 @@ export default function Post({ post }: { post: PostWithTags }) {
           ))}
         </div>
         <div className="flex flex-row gap-5">
-          <LikesHeart postId={post.id} liked={false} />
+          <div className="flex flex-row gap-1">
+            <Link href={`/posts/${post.id}`}>
+              <p>{post.likes.length}</p>
+            </Link>
+            <LikesHeart postId={post.id} liked={false} />
+          </div>
           <Link href={`/posts/${post.id}`}>
             <div className="flex flex-row gap-1">
               0

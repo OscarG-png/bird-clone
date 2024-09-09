@@ -1,6 +1,5 @@
 "use client";
 import { Heart } from "lucide-react";
-import Link from "next/link";
 
 export default function LikesHeart({
   postId,
@@ -23,13 +22,10 @@ export default function LikesHeart({
     }
   }
   return (
-    <div className="flex flex-row gap-1">
-      <Link href={`/posts/${postId}`}>0</Link>
-      <Heart
-        onClick={() => handleLike(postId)}
-        fill={liked ? "#dc2626" : "none"}
-        className="hover:cursor-pointer"
-      />
-    </div>
+    <Heart
+      onClick={() => handleLike(postId)}
+      fill={liked ? "#dc2626" : "none"}
+      className="hover:cursor-pointer"
+    />
   );
 }
