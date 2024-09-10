@@ -1,9 +1,10 @@
 import { getPostById } from "~/server/actions/queries";
 import Image from "next/image";
+import { type PostWithTagsAndLikes } from "~/server/db/schema";
 
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id } = params;
-  const post = await getPostById(parseInt(id));
+  const post: PostWithTagsAndLikes = await getPostById(parseInt(id));
   console.log("from post detail page: ", post);
   return (
     <div className="flex flex-col items-center justify-center gap-2">
