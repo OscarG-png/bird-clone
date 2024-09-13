@@ -34,7 +34,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
               </div>
               <div className="flex flex-row gap-1">
                 <p>0</p>
-                <button>Comment</button>
+                <button>Comments</button>
               </div>
             </div>
           </div>

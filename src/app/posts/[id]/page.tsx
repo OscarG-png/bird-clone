@@ -1,4 +1,5 @@
 import { getPostById } from "~/server/actions/queries";
+import { MessageCircleReply } from "lucide-react";
 import Image from "next/image";
 import { type PostWithTagsAndLikes } from "~/server/db/schema";
 
@@ -31,7 +32,9 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           </div>
           <div className="flex flex-row gap-1">
             <p>0</p>
-            <button>Comment</button>
+            <button>
+              <MessageCircleReply />
+            </button>
           </div>
         </div>
       </div>
