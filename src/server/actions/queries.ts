@@ -216,3 +216,25 @@ export async function getLikes(id: number) {
   });
   return likes;
 }
+
+export async function createComment(
+  formData: FormData,
+): Promise<{ message: string }> {
+  const user = await currentUser();
+  if (!user) {
+    throw new Error("User not found");
+  }
+  if (user.banned) {
+    throw new Error("User is banned");
+  }
+  const formContent = formData.get("content") as string;
+  const postId = parseInt(formData.get("postId") as string);
+  const commentData = {
+    user: user.username!,
+    postId: postId,
+    content: formContent,
+    createdAt: new Date(),
+  };
+
+  return { message: "Comment created" };
+}

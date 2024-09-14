@@ -73,6 +73,7 @@ export const comments = createTable(
       .references(() => posts.id, { onDelete: "cascade" })
       .notNull(),
     content: varchar("content", { length: 256 }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }),
   },
   (example) => ({
     nameIndex: index("comment_user_idx").on(example.user),
