@@ -5,6 +5,7 @@ import {
   likes,
   postHashTags,
   posts,
+  comments,
   type PostWithTagsAndLikes,
   type PostWithTags,
 } from "~/server/db/schema";
@@ -235,6 +236,6 @@ export async function createComment(
     content: formContent,
     createdAt: new Date(),
   };
-
+  await db.insert(comments).values(commentData);
   return { message: "Comment created" };
 }
