@@ -7,7 +7,7 @@ import CreateComment from "~/components/CreateComment";
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const post: PostWithTagsAndLikes = await getPostById(parseInt(id));
-  console.log("from post detail page: ", post);
+  // console.log("from post detail page: ", post);
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <h1>PostPage</h1>
@@ -41,5 +41,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       </div>
       <CreateComment postId={id} />
     </div>
+    // other comments from the post should be listed here.
   );
 }

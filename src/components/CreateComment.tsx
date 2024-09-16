@@ -16,6 +16,7 @@ export default function CreateComment({ postId }: { postId: string }) {
       });
       if (response.ok) {
         console.log("Comment created successfully");
+        form.reset();
       } else {
         alert("Error creating comment");
       }
@@ -25,14 +26,16 @@ export default function CreateComment({ postId }: { postId: string }) {
   return (
     <div className="rounded border-2 p-5 shadow-sm">
       <h1>Write a Reply</h1>
-      <form onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <input
           type="text"
           name="content"
           placeholder="Comment"
           className="rounded p-2 focus:border-cyan-400"
         />
-        <button type="submit">Submit</button>
+        <button type="submit" aria-label="Submit Comment">
+          Submit
+        </button>
       </form>
     </div>
   );
