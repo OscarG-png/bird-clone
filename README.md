@@ -21,7 +21,7 @@ I can tel that this projects wants a dedicated backend.
 
 # ToDo
 
-- [x]changing post and hashtag relations.
+- [x] changing post and hashtag relations.
 - [x] most posts to their own component that I can use in other places on the page.
 - [ ] I want to change the date that appears on posts on the main page to show a time difference, ie: 4 hours ago. I think the detail page of the post can have the exact date. I found a package I want to [use](https://day.js.org/docs/en/customization/relative-time).
 - [ ] Create a search by tag route so users can filter posts down to those.
