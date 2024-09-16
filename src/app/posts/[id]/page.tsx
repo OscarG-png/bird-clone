@@ -2,6 +2,7 @@ import { getPostById } from "~/server/actions/queries";
 import { MessageCircleReply } from "lucide-react";
 import Image from "next/image";
 import { type PostWithTagsAndLikes } from "~/server/db/schema";
+import CreateComment from "~/components/CreateComment";
 
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -38,6 +39,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
+      <CreateComment postId={id} />
     </div>
   );
 }
