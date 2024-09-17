@@ -34,12 +34,21 @@ export const posts = createTable(
     nameIndex: index("post_user_idx").on(example.user),
   }),
 );
+
+// base typing for posts
 export type Post = InferSelectModel<typeof posts>;
+
+// extended typing for posts
 export type PostWithTags = Post & { postTags: HashTag[] };
 export type PostWithTagsAndLikes = PostWithTags & { likes: Like[] };
+export type PostWithTagsLikesAndComments = PostWithTagsAndLikes & {
+  comments: Comment[];
+};
+
 export const postRelations = relations(posts, ({ many }) => ({
   postTags: many(postHashTags),
   likes: many(likes),
+  comments: many(comments),
 }));
 
 export const likes = createTable(
