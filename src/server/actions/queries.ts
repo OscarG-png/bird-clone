@@ -6,8 +6,9 @@ import {
   postHashTags,
   posts,
   comments,
-  type PostWithTagsAndLikes,
   type PostWithTags,
+  type PostWithTagsAndLikes,
+  type PostWithTagsLikesAndComments,
 } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq, sql } from "drizzle-orm";
@@ -75,7 +76,7 @@ export async function SubmitPost(
   return { message: "Post submitted!" };
 }
 
-export async function getPosts(): Promise<PostWithTagsAndLikes[]> {
+export async function getPosts(): Promise<PostWithTagsLikesAndComments[]> {
   const posts = await db.query.posts.findMany({
     orderBy: (model, { desc }) => desc(model.createdAt),
     with: {
@@ -85,6 +86,7 @@ export async function getPosts(): Promise<PostWithTagsAndLikes[]> {
         },
       },
       likes: true,
+      comments: true,
     },
   });
   return posts.map((post) => ({
@@ -94,6 +96,7 @@ export async function getPosts(): Promise<PostWithTagsAndLikes[]> {
       tag: postTag.tag.tag,
     })),
     likes: post.likes || [],
+    comments: post.comments || [],
   }));
 }
 

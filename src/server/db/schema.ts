@@ -89,6 +89,12 @@ export const comments = createTable(
   }),
 );
 export type Comment = InferSelectModel<typeof comments>;
+export const commentRelations = relations(comments, ({ one }) => ({
+  comments: one(posts, {
+    fields: [comments.postId],
+    references: [posts.id],
+  }),
+}));
 
 export const hashTags = createTable(
   "hash_tag",

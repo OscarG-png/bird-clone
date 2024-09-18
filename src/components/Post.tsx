@@ -3,9 +3,9 @@ import { Button } from "./ui/button";
 import LikesHeart from "./LikesHeart";
 import Link from "next/link";
 import Image from "next/image";
-import type { PostWithTagsAndLikes } from "~/server/db/schema";
+import type { PostWithTagsLikesAndComments } from "~/server/db/schema";
 
-export default function Post({ post }: { post: PostWithTagsAndLikes }) {
+export default function Post({ post }: { post: PostWithTagsLikesAndComments }) {
   console.log("post: ", post);
   return (
     <div key={post.id}>
@@ -46,7 +46,7 @@ export default function Post({ post }: { post: PostWithTagsAndLikes }) {
           </div>
           <Link href={`/posts/${post.id}`}>
             <div className="flex flex-row gap-1">
-              0
+              {post.comments.length}
               <MessageCircle />
             </div>
           </Link>
