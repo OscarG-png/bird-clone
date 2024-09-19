@@ -7,7 +7,6 @@ import {
   posts,
   comments,
   type PostWithTags,
-  type PostWithTagsAndLikes,
   type PostWithTagsLikesAndComments,
 } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
@@ -100,7 +99,9 @@ export async function getPosts(): Promise<PostWithTagsLikesAndComments[]> {
   }));
 }
 
-export async function getPostById(id: number): Promise<PostWithTagsAndLikes> {
+export async function getPostById(
+  id: number,
+): Promise<PostWithTagsLikesAndComments> {
   const post = await db.query.posts.findFirst({
     where: (model, { eq }) => eq(model.id, id),
     with: {
@@ -110,6 +111,7 @@ export async function getPostById(id: number): Promise<PostWithTagsAndLikes> {
         },
       },
       likes: true,
+      comments: true,
     },
   });
   if (!post) {
@@ -122,6 +124,7 @@ export async function getPostById(id: number): Promise<PostWithTagsAndLikes> {
       tag: postTag.tag.tag,
     })),
     likes: post.likes || [], // Ensure likes is an array of objects
+    comments: post.comments || [],
   };
 }
 

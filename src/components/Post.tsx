@@ -6,7 +6,7 @@ import Image from "next/image";
 import type { PostWithTagsLikesAndComments } from "~/server/db/schema";
 
 export default function Post({ post }: { post: PostWithTagsLikesAndComments }) {
-  console.log("post: ", post);
+  // console.log("post: ", post);
   return (
     <div key={post.id}>
       <div className="flex w-72 flex-col items-center rounded border p-2 shadow-md">
