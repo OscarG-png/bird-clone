@@ -11,12 +11,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Error creating post" }, { status: 500 });
   }
 }
-export async function DEL(request: Request) {
-  const id = Number(request.url.split("/")[2]);
+export async function DELETE(request: Request) {
+  const url = new URL(request.url);
+  const id = Number(url.pathname.split("/").pop());
+
+  if (isNaN(id)) {
+    return NextResponse.json({ error: "Invalid post ID" }, { status: 400 });
+  }
+
   try {
     await deletePost(id);
     return NextResponse.json({ message: "Post deleted" }, { status: 200 });
   } catch (error) {
+    console.error("Error deleting post:", error);
     return NextResponse.json({ error: "Error deleting post" }, { status: 500 });
   }
 }
