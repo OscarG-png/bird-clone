@@ -4,6 +4,7 @@ import Image from "next/image";
 export default async function UserPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const posts = await getUserPosts(id);
+
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <h1>UserPage</h1>

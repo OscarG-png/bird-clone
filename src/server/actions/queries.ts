@@ -8,6 +8,7 @@ import {
   comments,
   type PostWithTags,
   type PostWithTagsLikesAndComments,
+  type Comment,
 } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq, sql } from "drizzle-orm";
@@ -249,4 +250,11 @@ export async function createComment(
   };
   await db.insert(comments).values(commentData);
   return { message: "Comment created" };
+}
+
+export async function getCommentsByUser(userId: string): Promise<Comment[]> {
+  const comments = await db.query.comments.findMany({
+    where: (model, { eq }) => eq(model.user, userId),
+  });
+  return comments;
 }
