@@ -9,6 +9,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   const post = await getPostById(parseInt(id));
   const { comments } = post;
   console.log("from post detail page: ", post);
+
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">
@@ -45,15 +46,14 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       </div>
       <CommentsList comments={comments} />
     </>
-    // other comments from the post should be listed here.
   );
 }
 
 function CommentsList({ comments }: { comments: Comment[] }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 border-2 p-5 shadow-md">
+    <div className="flex flex-col items-center justify-center gap-2">
       {comments.map((comment) => (
-        <div key={comment.id}>
+        <div key={comment.id} className="rounded-xl border-2 p-5 shadow-md">
           <p>From: {comment.user}</p>
           <p>{comment.content}</p>
           <p>Posted on: {comment.createdAt.toDateString()}</p>

@@ -123,7 +123,7 @@ export async function getPostById(
       id: postTag.tagId,
       tag: postTag.tag.tag,
     })),
-    likes: post.likes || [], // Ensure likes is an array of objects
+    likes: post.likes || [],
     comments: post.comments || [],
   };
 }
@@ -136,21 +136,26 @@ export async function getUserPosts(userId: string) {
   return posts;
 }
 export async function deletePost(id: number): Promise<{ message: string }> {
-  const post = await db.delete(posts).where(eq(posts.id, id)).returning();
-  console.log("Post deleted: ", post);
-  if (!post) {
-    throw new Error("Post not found");
-  }
   const user = await currentUser();
   if (!user) {
     throw new Error("User not found");
   }
-  // if (post.user !== user.username) {
-  //   throw new Error("You are not authorized to delete this post");
-  // }
-  // await db.query.posts.delete({
-  //   where: (model, { eq }) => eq(model.id, id),
-  // });
+
+  const post = await db.query.posts.findFirst({
+    where: (model, { eq }) => eq(model.id, id),
+  });
+
+  if (!post) {
+    throw new Error("Post not found");
+  }
+
+  if (post.user !== user.username) {
+    throw new Error("You are not authorized to delete this post");
+  }
+
+  await db.delete(posts).where(eq(posts.id, id));
+
+  console.log("Post deleted: ", post);
   return { message: "Post deleted" };
 }
 export interface TagCount {
